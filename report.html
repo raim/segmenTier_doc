@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analysis of Yeast RNA-seq Data</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Analysis of Yeast RNA-seq Data">
+  <meta name="author" content="Rainer Machne">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Analysis of Yeast RNA-seq Data</h1>
+    <h2>by Karl, the segmenTier</h2>
+    <p>Rainer Machne<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="centertext" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+em {
+  font-style: italic
+}
+</style>
+
+<style>
+oq {
+    background-color:yellow;
+    color:#CC2904;
+    font-weight: bold;
+}
+</style>
+
+<h3>Karl, the segmenTier</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h3>Primary Segmentation</h3>
+  </hgroup>
+  <article data-timings="">
+    <p>length distribution, border scanning</p>
+
+<p>script <code>presegment.R</code> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h3>Test Sets: Karl on busy feet</h3>
+  </hgroup>
+  <article data-timings="">
+    <p>example primary segment 
+-&gt; problems: too little or too much fragmentation
+-&gt; scan overlaps and select best hits</p>
+
+<p>script <code>clusterSegment.R</code>  (<code>segmenTier</code>)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h3>Genome-wide Parameter Scans</h3>
+  </hgroup>
+  <article data-timings="">
+    <p>\[
+\begin{aligned}
+    I(Q,T) =& |Q \cap T|\\
+    U(Q,T) =& |Q \cup T|\\
+    J(Q,T) =& \frac{I}{U}\\
+    R(Q,T) =& \frac{|Q|}{|T|}
+\end{aligned}
+\]</p>
+
+<p>Figures:</p>
+
+<ul>
+<li>measures: jaccard, fragmentation and ratio thresholds</li>
+<li>ratio CDF (clustered) &amp; .8-1.2 range (sorted)</li>
+<li>heights &amp; jaccard vs. numhits &amp; clusterpval</li>
+<li>above for A vs. D, ORF vs. CUT/SUT</li>
+</ul>
+
+<ol>
+<li>optimization of settings: 
+best: dcash, E1-5; 
+not much influence from K and ccor/icor;
+TODO: test M, and more internal parameters</li>
+<li>biology: difference A, D, CUT</li>
+</ol>
+
+<p>scripts <code>testSegment.R</code> (<code>segmenTools</code>)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h3>Best Segmentation</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>ratio CDF for all transcripts &amp; cltranscripts</li>
+</ul>
+
+<ol>
+<li>optimize for different targets?</li>
+<li>hierarchical approach?</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h3>Segment Annotation</h3>
+  </hgroup>
+  <article data-timings="">
+    <p>classes: </p>
+
+<ul>
+<li>ID, rank, covers, inside, upstream or downstream, jaccard</li>
+<li>next upstream/downstream, distance</li>
+<li>same for antisense</li>
+</ul>
+
+<p>figures:</p>
+
+<ul>
+<li>by clusters: highest rank vs. sense/antisense </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h3>Segment Dynamics</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>read-count</li>
+<li>phase-dist (pval-dist)</li>
+</ul>
+
+<p>-&gt; compare to annotation; e.g. upstream-downstream pairs,
+sense-antisense pairs</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Primary Segmentation'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Test Sets: Karl on busy feet'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Genome-wide Parameter Scans'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Best Segmentation'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Segment Annotation'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Segment Dynamics'>
+         7
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
